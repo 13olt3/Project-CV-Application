@@ -3,7 +3,7 @@ import "./App.css";
 import GeneralInformation from "./assets/genInfo.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [counter, setCounter] = useState(0);
 
   return (
     <>
