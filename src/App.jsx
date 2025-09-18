@@ -1,4 +1,4 @@
-import GeneralInformation from "./assets/genInfo.jsx";
+import GeneralInformation from "./components/genInfo.jsx";
 
 function App() {
   return (
