@@ -1,67 +1,137 @@
 import { useState } from "react";
 
+function Input({
+  id,
+  inputName,
+  style,
+  inputValue,
+  handleChange,
+  buttonStyle,
+  editButton,
+  confirmButton,
+  clickEdit,
+  clickConfirm,
+}) {
+  return (
+    <>
+      <label>
+        {inputName}
+        <input
+          value={inputValue}
+          style={style}
+          id={id}
+          onChange={(e) => handleChange(id, e)}
+        ></input>
+        <button
+          type="button"
+          style={{ ...buttonStyle, ...editButton }}
+          onClick={clickEdit}
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          style={{ ...buttonStyle, ...confirmButton }}
+          onClick={clickConfirm}
+        >
+          Confirm
+        </button>
+      </label>
+    </>
+  );
+}
+
+function EditableField({ id, label, inputValue, handleChange }) {
+  const [isEditing, setIsEditing] = useState(true);
+
+  return (
+    <div className="inputField">
+      <label className={isEditing ? "show" : "hide"}>
+        {label}
+        <input
+          id={id}
+          value={inputValue}
+          disabled={!isEditing}
+          onChange={(e) => handleChange(id, e)}
+        />
+      </label>
+      <div className={isEditing ? "hide" : "show"}>
+        {label} {inputValue}
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setIsEditing(!isEditing)}
+        className={isEditing ? "confirm" : "edit"}
+      >
+        {isEditing ? "Confirm" : "Edit"}
+      </button>
+    </div>
+  );
+}
+
 export default function GeneralInformation() {
-  const [firstName, setFirstName] = useState("");
-  const [formSubmit, setFormSubmit] = useState(false);
-  const [showEdit, setShowEdit] = useState({
-    display: "none",
-    marginLeft: "1em",
-  });
+  const generalInfo = [
+    { id: 1, label: "First name: ", value: "" },
+    { id: 2, label: "Last Name: ", value: "" },
+    { id: 3, label: "Email: ", value: "" },
+    { id: 4, label: "Phone Number: ", value: "" },
+  ];
 
-  const [style, setStyle] = useState({
-    padding: "5px",
-    fontFamily: "Arial",
-    // pointerEvents: "none",
-    caretColor: "",
-  });
+  const [generalInformation, setGeneralInformation] = useState(generalInfo);
 
-  function handleSetFirstName(e) {
-    setFirstName(e.target.value);
+  function handleFieldChange(id, e) {
+    setGeneralInformation(
+      generalInformation.map((f) => {
+        if (f.id === id) {
+          return { ...f, value: e.target.value };
+        } else {
+          return f;
+        }
+      })
+    );
   }
-
-  function handleClick() {
-    let newStyle = { ...style, caretColor: "transparent", opacity: "0.3" };
-    setStyle(newStyle);
-    setFormSubmit(true);
-    setShowEdit({ ...showEdit, display: "" });
-  }
-  function handleEdit(e) {
-    e.preventDefault();
-    let newStyle = { ...style, caratColor: "", opacity: "1" };
-    setFormSubmit(false);
-    setStyle(newStyle);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Form submitted, ${firstName}`);
-  };
-
-  const doNothing = (e) => {
-    e.preventDefault();
-  };
 
   return (
     <>
       <form className="GeneralInformation">
         <h2>General Information</h2>
-        <label>
-          First Name:{" "}
-          <input
-            value={firstName}
-            onChange={handleSetFirstName}
-            style={style}
-            disabled={formSubmit}
-          ></input>
-          <button style={showEdit} onClick={handleEdit} disabled={!formSubmit}>
-            Edit
-          </button>
-        </label>
-        <button onClick={handleClick} disabled={formSubmit}>
+
+        {generalInformation.map((field) => (
+          <EditableField
+            id={field.id}
+            label={field.label}
+            inputValue={generalInformation.find((f) => f.id === field.id).value}
+            handleChange={handleFieldChange}
+          />
+        ))}
+
+        {/* <button
+          type="button"
+          onClick={() => console.log("asdf")}
+          disabled={false}
+        >
           Confirmation
-        </button>
+        </button> */}
       </form>
     </>
+  );
+}
+
+function MyInput({ label }) {
+  const [highlight, setHighlight] = useState(false);
+
+  return (
+    <div>
+      <label>{label}</label>
+      <input
+        style={{
+          backgroundColor: highlight ? "yellow" : "white",
+        }}
+        onFocus={() => setHighlight(true)}
+        onBlur={() => setHighlight(false)}
+      />
+    </div>
   );
 }
 

@@ -66,3 +66,51 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  caret-color: transparent;
+}
+
+label {
+  /* padding-bottom: 1em; */
+  font-family: inherit;
+}
+input {
+  padding: 5px;
+  caret-color: auto;
+}
+
+h2 {
+  border-bottom: 2px solid white;
+}
+button {
+  margin-left: 1em;
+  width: fit-content;
+  justify-self: center;
+}
+
+.confirm {
+  color: green;
+}
+
+.edit {
+  color: red;
+}
+
+.inputField {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.show {
+  display: block;
+  align-self: center;
+}
+
+.hide {
+  display: none;
+}
