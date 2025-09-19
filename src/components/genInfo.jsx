@@ -76,6 +76,7 @@ export default function GeneralInformation() {
     { id: 2, label: "Last Name: ", value: "" },
     { id: 3, label: "Email: ", value: "" },
     { id: 4, label: "Phone Number: ", value: "" },
+    { id: 5, label: "Misc; ", value: "" },
   ];
 
   const [generalInformation, setGeneralInformation] = useState(generalInfo);
